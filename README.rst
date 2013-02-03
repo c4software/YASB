@@ -44,8 +44,7 @@ To build your project you need to run the "yasb" command directly from the proje
 	optional arguments:
 	  -h, --help       show this help message and exit
 	  -v, --version    show program's version number and exit
-	  --ignore IGNORE  Ignore the execution of the specified plugin. Overide your
-					   params.py. Can be used multiple times
+	  --ignore IGNORE  Ignore the execution of the specified plugin. Overide your params.py. Can be used multiple times
 	  --debug          Change the log level to debug
 
 * Classic usage :
