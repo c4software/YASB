@@ -26,7 +26,7 @@ Instalation
 
 Project Structure
 -----------------
-The only needed file in your project is the **params.py**. This file must contain at least :
+The only **NEEDED** file in your project is the **params.py**. This file must contain at least :
 
 .. code:: python
 
@@ -44,8 +44,6 @@ For a full example you can take a look at the Demo Project.
 Demo project
 ------------
 `YASB-SAMPLE`_
-
-
 
 Usage Documentation
 ------------------
