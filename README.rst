@@ -40,6 +40,8 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 
 For a full example you can take a look at the Demo Project.
 
+**Note:** *All Flags/Settings you put in this stucture will be available in your templates.*
+
 **SOON : A tool call yasb-init, will simplify the creation of a new project** 
 
 Demo project
