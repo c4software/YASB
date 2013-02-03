@@ -34,10 +34,31 @@ SOON
 
 Core Documentation
 ------------------
-SOON
+To build your project you need to run the "yasb" command directly from the project folder.
 
-Plugins Documentation
----------------------
+	# yasb --help
+	usage: yasb [-h] [-v] [--ignore IGNORE] [--debug]
+
+	Yasb builder tool
+
+	optional arguments:
+	  -h, --help       show this help message and exit
+	  -v, --version    show program's version number and exit
+	  --ignore IGNORE  Ignore the execution of the specified plugin. Overide your
+					   params.py. Can be used multiple times
+	  --debug          Change the log level to debug
+
+* Classic usage :
+	# yasb
+* Advanced usage (Run the build, without the plugin static and theme) :
+	# yasb --ignore theme --ignore static
+	
+
+More documentation : Soon
+
+
+Plugins usage Documentation
+---------------------------
 SOON
 
 .. _YASB-SAMPLE: https://github.com/c4software/YASB-SAMPLE
