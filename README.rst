@@ -26,7 +26,7 @@ Instalation
 
 Project Structure
 -----------------
-The only needed file in your project you **REALLY NEED** is the params.py. This file must contain at least :
+The only needed file in your project is the **params.py**. This file must contain at least :
 
 .. code:: python
 
