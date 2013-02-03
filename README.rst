@@ -28,7 +28,7 @@ Project Structure
 -----------------
 The only needed file in your project you **REALLY NEED** is the params.py. This file must contain at least :
 
-:: 
+.. code:: python
 	settings = {"site_title":"Demo blog", 
 				"author":"Valentin Brosseau",
 				"url":"http://demo.url",
