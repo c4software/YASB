@@ -37,7 +37,7 @@ The only needed file in your project you **REALLY NEED** is the params.py. This 
 				"output":"./output/",
 				"plugins":[],
 				"theme":"./theme/demo/"
-				}
+	}
 
 For a full example you can take a look at the Demo Project.
 
