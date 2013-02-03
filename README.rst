@@ -37,14 +37,14 @@ Core Documentation
 To build your project you need to run the "yasb" command directly from the project folder.
 
 	# yasb --help
-	usage: yasb [-h] [-v] [--ignore IGNORE] [--debug]
+	usage: yasb [-h] [-v] [--ignore PLUGIN] [--debug]
 
 	Yasb builder tool
 
 	optional arguments:
 	  -h, --help       show this help message and exit
 	  -v, --version    show program's version number and exit
-	  --ignore IGNORE  Ignore the execution of the specified plugin. Overide your params.py. Can be used multiple times
+	  --ignore PLUGIN  Ignore the execution of the specified plugin (Overide your params.py)
 	  --debug          Change the log level to debug
 
 * Classic usage :
