@@ -24,9 +24,27 @@ Instalation
 -----------
 	pip install -U  https://github.com/c4software/YASB/archive/master.zip
 
+Project Structure
+-----------------
+The only needed file in your project you **REALLY NEED** is the params.py. This file must contain at least :
+
+:: 
+	settings = {"site_title":"Demo blog", 
+				"author":"Valentin Brosseau",
+				"url":"http://demo.url",
+				"input":"./source/",
+				"output":"./output/",
+				"plugins":[],
+				"theme":"./theme/demo/"
+				}
+
+For a full example you can take a look at the Demo Project.
+
 Demo project
 ------------
 `YASB-SAMPLE`_
+
+
 
 Usage Documentation
 ------------------
