@@ -24,7 +24,7 @@ Features
 Instalation
 -----------
 
-``pip install -U  ... ``
+	pip install -U  https://github.com/c4software/YASB/archive/master.zip
 
 
 
