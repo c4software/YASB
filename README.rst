@@ -40,6 +40,8 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 
 For a full example you can take a look at the Demo Project.
 
+**SOON : A tool call yasb-init, will simplify the creation of a new project** 
+
 Demo project
 ------------
 `YASB-SAMPLE`_
