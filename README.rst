@@ -24,6 +24,9 @@ Instalation
 -----------
 	pip install -U  https://github.com/c4software/YASB/archive/master.zip
 
+Demo project
+------------
+`YASB-SAMPLE`_
 
 Usage
 -----
@@ -33,6 +36,7 @@ Documentation
 -------------
 SOON
 
+.. _YASB-SAMPLE: https://github.com/c4software/YASB-SAMPLE
 .. _Python: http://www.python.org/
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Jinja2: http://jinja.pocoo.org/
