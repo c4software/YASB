@@ -37,7 +37,7 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 				"output":"./output/",
 				"plugins":[],
 				"theme":"./theme/demo/"
-	}
+			}
 
 For a full example you can take a look at the Demo Project.
 
