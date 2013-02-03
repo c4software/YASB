@@ -32,8 +32,12 @@ Usage
 -----
 SOON
 
-Documentation
--------------
+Core Documentation
+------------------
+SOON
+
+Plugins Documentation
+---------------------
 SOON
 
 .. _YASB-SAMPLE: https://github.com/c4software/YASB-SAMPLE
