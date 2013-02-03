@@ -28,11 +28,7 @@ Demo project
 ------------
 `YASB-SAMPLE`_
 
-Usage
------
-SOON
-
-Core Documentation
+Usage Documentation
 ------------------
 To build your project you need to run the "yasb" command directly from the project folder.
 
