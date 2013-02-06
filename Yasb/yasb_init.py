@@ -69,6 +69,12 @@ def main():
 	if not os.path.exists(output_folder):
 		os.makedirs(output_folder)
 
+	if not os.path.exists(theme_folder):
+		os.makedirs(theme_folder)
+		os.makedirs(theme_folder+"/static/")
+		os.makedirs(theme_folder+"/templates/")
+		# TODO Creation/deplacement de l'arborescence pour le THEME
+
 	if not os.path.exists("./plugins/"):
 		os.makedirs("./plugins/")
 	try:
@@ -76,8 +82,6 @@ def main():
 		f.close()
 	except:
 		pass
-
-	# TODO Creation/deplacement de l'arborescence pour le THEME
 
 if __name__ == "__main__":
 	try:
