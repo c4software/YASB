@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 import readline
+import os, sys
+
+sys.path.append(os.getcwd())
 
 def wait_for_input(prompt, default=""):
 	val = raw_input(prompt)
@@ -32,7 +35,7 @@ def main():
 	author 			= wait_for_input("Author : ")
 	url 			= wait_for_input("Url (http://) : ","http://")
 	input_folder 	= wait_for_input("Input folder (Where you rst files will be) : (./source/)","./source/")
-	output_folder 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./source/")
+	output_folder 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
 	theme_folder 	= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
 
@@ -54,6 +57,27 @@ def main():
 	if "static" in selected_plugins:
 		static_settings = wait_for_input("Emplacement of static file (./static/): ","./static/")
 
+
+	# TODO suite parametrage plugin
+
+	# TODO Creation du fichier params.py sur disque.
+
+	# Creation des dossiers input_folder / output_folder / plugins (si non existant)
+	if not os.path.exists(input_folder):
+		os.makedirs(input_folder)
+
+	if not os.path.exists(output_folder):
+		os.makedirs(output_folder)
+
+	if not os.path.exists("./plugins/"):
+		os.makedirs("./plugins/")
+	try:
+		f = open("./plugins/__init__.py","w")
+		f.close()
+	except:
+		pass
+
+	# TODO Creation/deplacement de l'arborescence pour le THEME
 
 if __name__ == "__main__":
 	try:
