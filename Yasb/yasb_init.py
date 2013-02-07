@@ -4,6 +4,8 @@ import os, sys
 
 sys.path.append(os.getcwd())
 
+import json
+
 def wait_for_input(prompt, default=""):
 	val = raw_input(prompt)
 	if val == "":
@@ -25,18 +27,26 @@ def main():
 	print ""
 	print ""
 
+	# Template pour les settings
+	settings_template = {	"site_title":"", 
+							"author":"",
+							"url":"",
+							"input":"",
+							"output":"",
+							"plugins":[],
+							"theme":""}
+
 	# Base settings
 	print "\nBase settings :"
 	print "---------------\n"
-	project_name = ""
-	while project_name is "":
-		project_name = wait_for_input("Name of project : ")
+	while settings_template["site_title"] is "":
+		settings_template["site_title"] = wait_for_input("Site title : ")
 
-	author 			= wait_for_input("Author : ")
-	url 			= wait_for_input("Url (http://) : ","http://")
-	input_folder 	= wait_for_input("Input folder (Where you rst files will be) : (./source/)","./source/")
-	output_folder 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
-	theme_folder 	= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
+	settings_template["author"] 	= wait_for_input("Author : ")
+	settings_template["url"] 		= wait_for_input("Url (http://) : ","http://")
+	settings_template["input"] 		= wait_for_input("Input folder (Where you rst files will be) : (./source/)","./source/")
+	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
+	settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
 
 	# Plugins settings
@@ -52,28 +62,39 @@ def main():
 		if choice == "y":
 			selected_plugins.append(plugin)
 
-
 	# static settings
 	if "static" in selected_plugins:
 		static_settings = wait_for_input("Emplacement of static file (./static/): ","./static/")
+		if not os.path.exists(static_settings):
+			os.makedirs(static_settings)
 
+	if "blog" in selected_plugins:
+		settings_template['blog_settings'] = {}	
 
-	# TODO suite parametrage plugin
+	if "pyscss" in selected_plugins:
+		settings_template['scss_settings'] = {"files":[('main.scss','main.css')],"path":"./theme/classic/static/styles/"}
 
-	# TODO Creation du fichier params.py sur disque.
+	settings_template["plugins"] = selected_plugins
+
+	# Creation du fichier params.py sur disque
+	output_settings = "settings = {0}".format(json.dumps(settings_template, separators=(',', ': '), indent=4, sort_keys=True))
+	# Ecriture du fichier params.py sur disque
+	f = open("params.py","w")
+	f.write(output_settings)
+	f.close()
 
 	# Creation des dossiers input_folder / output_folder / plugins (si non existant)
-	if not os.path.exists(input_folder):
-		os.makedirs(input_folder)
+	if not os.path.exists(settings_template["input"]):
+		os.makedirs(settings_template["input"])
 
-	if not os.path.exists(output_folder):
-		os.makedirs(output_folder)
+	if not os.path.exists(settings_template["output"]):
+		os.makedirs(settings_template["output"])
 
-	if not os.path.exists(theme_folder):
-		os.makedirs(theme_folder)
-		os.makedirs(theme_folder+"/static/")
-		os.makedirs(theme_folder+"/templates/")
-		# TODO Creation/deplacement de l'arborescence pour le THEME
+	if not os.path.exists(settings_template["theme"]):
+		os.makedirs(settings_template["theme"])
+		os.makedirs(settings_template["theme"]+"/static/")
+		os.makedirs(settings_template["theme"]+"/templates/")
+		# TODO Creation/deplacement de l'arborescence pour le THEME (Theme par default)
 
 	if not os.path.exists("./plugins/"):
 		os.makedirs("./plugins/")
