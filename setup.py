@@ -9,7 +9,8 @@ except ImportError:
     requires.append('argparse')
 
 entry_points = {'console_scripts': [
-                                    'yasb = Yasb.build:main'
+                                    'yasb = Yasb.build:main',
+                                    'yasb-init = Yasb.yasb_init:main_script'
                                    ]
                 }
 

@@ -95,12 +95,19 @@ def main():
 		os.makedirs(settings_template["theme"]+"/static/")
 		os.makedirs(settings_template["theme"]+"/templates/")
 		# TODO Creation/deplacement de l'arborescence pour le THEME (Theme par default)
+		# os.path.dirname(__file__) << Emplacement du script python yasb-init (va permettre de deplacer le theme "classic")
 
 	if not os.path.exists("./plugins/"):
 		os.makedirs("./plugins/")
 	try:
 		f = open("./plugins/__init__.py","w")
 		f.close()
+	except:
+		pass
+
+def main_script():
+	try:
+		main()
 	except:
 		pass
 
