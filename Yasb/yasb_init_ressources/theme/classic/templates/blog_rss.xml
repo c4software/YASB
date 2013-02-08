@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>{{site_title}}</title>
+	<link href="{{url}}" rel="alternate"></link>
+	<link href="{{url}}{{settings['rss_path']}}{{settings['rss_file']}}" rel="self"></link>
+	<id>{{url}}</id>
+	<updated>{{updated.isoformat()}}</updated>
+	{% for fields,part_article in articles %}
+	<entry>
+		<title>{{fields.title}}</title>
+		<link href="{{url}}{{fields.page}}" rel="alternate"></link>
+		<updated>{{fields.date.isoformat()}}</updated>
+		<author>
+			<name>{{author}}</name>
+		</author>
+		<id>tag:{{url}},{{fields.date.date().isoformat()}}:{{fields.page}}</id>
+		<summary type="html">{{part_article|e}}</summary>
+		{% for tag in fields.tags.split(",") %}<category term="{{tag.lstrip()}}"></category>{% endfor %}
+	</entry>
+	{% endfor %}
+</feed>

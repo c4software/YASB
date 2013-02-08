@@ -5,6 +5,7 @@ import os, sys
 sys.path.append(os.getcwd())
 
 import json
+import shutil
 
 def wait_for_input(prompt, default=""):
 	val = raw_input(prompt)
@@ -91,10 +92,10 @@ def main():
 		os.makedirs(settings_template["output"])
 
 	if not os.path.exists(settings_template["theme"]):
-		os.makedirs(settings_template["theme"])
-		os.makedirs(settings_template["theme"]+"/static/")
-		os.makedirs(settings_template["theme"]+"/templates/")
-		# TODO Creation/deplacement de l'arborescence pour le THEME (Theme par default)
+		#os.makedirs(settings_template["theme"])
+		#os.makedirs(settings_template["theme"]+"/static/")
+		#os.makedirs(settings_template["theme"]+"/templates/")
+		shutil.copytree(os.path.dirname(__file__)+"/yasb_init_ressources/theme/", "./theme/")
 		# os.path.dirname(__file__) << Emplacement du script python yasb-init (va permettre de deplacer le theme "classic")
 
 	if not os.path.exists("./plugins/"):

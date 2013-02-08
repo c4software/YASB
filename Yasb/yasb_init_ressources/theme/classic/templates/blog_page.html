@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+	{% for fields,article in articles %}
+	<article>
+	        <div class="postDate" title="{{ fields.date.isoformat() }}">
+	            <div class="dayMonth">{{fields.date.date().day}}-{{fields.date.date().month}}</div>
+	            <div class="year">{{fields.date.date().year}}</div>
+	        </div>
+	        <div class="postContent">
+	            <h3><a href="/{{ fields.page }}" rel="bookmark" title="Permalink to {{fields.title}}">{{ fields.title }}</a></h3>
+	            <div class="post">{{ fields.summary }} <br /><a href="/{{ fields.page }}">Lire la suite...</a></div>
+	        </div>
+	        <div class="clear"></div>
+	</article>
+	{% endfor %}
+
+	<p class="paginator">
+		{% if  paginator.has_previous %}
+        <a href="/{{ paginator.previous_page }}.html">&laquo;</a>
+        {% endif %}
+	    Page {{ current_page }} / {{ nb_page }}
+		{% if  paginator.has_next %}	    
+	    <a href="/{{ paginator.next_page }}.html">&raquo;</a>
+	    {% endif %}
+	</p>
+
+{% endblock %}

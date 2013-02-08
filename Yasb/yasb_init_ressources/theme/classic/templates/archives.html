@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Archives</h2>
+
+<dl>
+{% for fields,part_article in articles %}
+    <dt>{{ fields.date.strftime("%Y-%m-%d") }}</dt>
+    <dd><a href='{{ fields.page }}'>{{ fields.title }}</a></dd>
+{% endfor %}
+</dl>
+{% endblock %}
