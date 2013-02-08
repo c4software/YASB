@@ -28,10 +28,10 @@ Instalation
 Fast usage
 ----------
 
-	mkdir myproject && cd myproject
+.. code:: bash
 
+	mkdir myproject && cd myproject
 	yasb-init
-	
 	yasb
 
 Project Structure
