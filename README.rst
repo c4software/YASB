@@ -32,6 +32,7 @@ Fast usage
 
 	# mkdir myproject && cd myproject
 	# yasb-init
+	# # Create your first article in the source/ folder
 	# yasb
 
 Project Structure

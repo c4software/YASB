@@ -77,6 +77,9 @@ def main():
 
 	settings_template["plugins"] = selected_plugins
 
+	# Init de quelques lien pour de la demo
+	settings_template["links"] = (('Home', '/'),('Yasb', 'https://github.com/c4software/YASB'))
+
 	# Creation du fichier params.py sur disque
 	output_settings = "settings = {0}".format(json.dumps(settings_template, separators=(',', ': '), indent=4, sort_keys=True))
 	# Ecriture du fichier params.py sur disque
