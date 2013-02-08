@@ -30,9 +30,9 @@ Fast usage
 
 .. code:: bash
 
-	mkdir myproject && cd myproject
-	yasb-init
-	yasb
+	# mkdir myproject && cd myproject
+	# yasb-init
+	# yasb
 
 Project Structure
 -----------------
