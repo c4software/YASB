@@ -53,12 +53,12 @@ def main():
 	# Plugins settings
 	print "\nPlugin settings :"
 	print "-----------------\n"
-	available_plugins = ["blog","pyscss","sitemap","static","theme"]
+	available_plugins = [("blog","A simple blog plugin. Provide Pagination, rss, archive, draft"),("pyscss","SCSS compiler. REQUIRE PyScss"),("sitemap","Sitemap generator"),("static","Move defined static folder content to the output"),("theme","Move the user theme to the output folder.")]
 	selected_plugins = []
-	for plugin in available_plugins:
+	for plugin,description in available_plugins:
 		choice = None
 		while choice is not "y" and choice is not "n" and choice is not "":
-			choice = wait_for_input("Enable plugin : {0} ? (Y/n)".format(plugin),"y")
+			choice = wait_for_input("Enable plugin : {0} - (Desc {1}) ? (Y/n)".format(plugin,description),"y")
 
 		if choice == "y":
 			selected_plugins.append(plugin)

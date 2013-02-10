@@ -3,10 +3,10 @@ from jinja2 import Environment, FileSystemLoader
 def build_html(content, fields, settings):
 	#content = "{% extends template %}" # {% block content %}"+content+"{% endblock %}
 	if "template" not in fields:
-		fields['template'] = "base.html"
+		fields['template'] = "page.html"
 	f = fields.copy()
 	f["content"] = content
-	return render("{% extends template %}", f, settings)
+	return render("", f, settings)
 
 def render(content, fields, settings):
 	env = Environment(loader=FileSystemLoader(settings.get("theme")+"templates/"))
