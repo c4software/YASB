@@ -58,7 +58,7 @@ def main():
 	for plugin,description in available_plugins:
 		choice = None
 		while choice is not "y" and choice is not "n" and choice is not "":
-			choice = wait_for_input("Enable plugin : {0} - (Desc {1}) ? (Y/n)".format(plugin,description),"y")
+			choice = wait_for_input("Enable plugin : {0} - {1} ? (Y/n)".format(plugin,description),"y")
 
 		if choice == "y":
 			selected_plugins.append(plugin)
