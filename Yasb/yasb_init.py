@@ -104,7 +104,7 @@ def main():
 		#os.makedirs(settings_template["theme"])
 		#os.makedirs(settings_template["theme"]+"/static/")
 		#os.makedirs(settings_template["theme"]+"/templates/")
-		shutil.copytree(os.path.dirname(__file__)+"/yasb_init_ressources/theme/", "./theme/")
+		shutil.copytree(os.path.dirname(__file__)+"/yasb_init_ressources/theme/classic/", "./theme/classic")
 		# os.path.dirname(__file__) << Emplacement du script python yasb-init (va permettre de deplacer le theme "classic")
 
 	if not os.path.exists("./plugins/"):
