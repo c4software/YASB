@@ -1,0 +1,13 @@
+
+/* Slide avec titre */
+slides > slide.title-slide:after
+{
+	background-image: url(../../images/angers_logo.png);
+}
+
+/* Slide standard */
+slides > slide:not(.nobackground):before
+{
+  content: "Samuel Moron - Rapport de stage";
+  background-image: url(../../images/favicon.png);
+}

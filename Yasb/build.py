@@ -1,6 +1,7 @@
 from Yasb.parsers import rst
 from Yasb import htmlbuilder
 from Yasb.settings import Settings
+from Yasb.utils import format_title_to_filename
 
 import os, sys
 import logging
@@ -60,34 +61,41 @@ def main():
 
 		logging.info("[Core] Processing : "+infile)
 		content,fields = rst.run(open(settings.get("input")+infile, 'r').read())
-		result_page = htmlbuilder.build_html(content,fields, settings)
-
+		
 		output_dir = settings.get("output")
 
-		# Create output dir if needed
-		if not os.path.exists(output_dir):
-				os.makedirs(output_dir)
-
-		# Create output path if needed
-		if "path" in fields:
-			output_dir = output_dir+fields['path']
+		# If the article has the nosave field we skip the writing to disk action
+		if "nosave" not in fields:
+			
+			result_page = htmlbuilder.build_html(content,fields, settings)
+			# Create output dir if needed
 			if not os.path.exists(output_dir):
-				os.makedirs(output_dir)
-		
-		# Get the name of output file
-		if "page" not in fields:
-			fileName, fileExtension = os.path.splitext(infile)
-			fields['page'] = fileName+".html"
+					os.makedirs(output_dir)
 
-		logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
-		f = open(output_dir+fields['page'], 'w')
+			# Create output path if needed
+			if "path" in fields:
+				output_dir = output_dir+fields['path']
+				if not os.path.exists(output_dir):
+					os.makedirs(output_dir)
+			
+			# Get the name of output file
+			if "page" not in fields:
+				if settings.get('title_as_name') and "title" in fields:
+					# Use the title inside fields to name the output file.
+					fields['page'] = format_title_to_filename(fields['title'])+".html"
+				else:
+					fileName, fileExtension = os.path.splitext(infile)
+					fields['page'] = fileName+".html"
+
+			logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
+			f = open(output_dir+fields['page'], 'w')
+			f.write(result_page.encode('utf8'))
+			f.close()
 
 		# Execute the "run" action of each enable plugin
 		for plugin in plugins:
 			plugin.run(settings=settings, content=content, fields=fields)
 
-		f.write(result_page.encode('utf8'))
-		f.close()
 
 	# Execute the teardown method of each plugin
 	for plugin in plugins:

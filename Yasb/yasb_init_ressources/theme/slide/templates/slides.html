@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+	{% for fields,slide in slides %}
+	<slide>
+		<hgroup>
+		  <h2>{{ fields.title }}</h2>
+		</hgroup>
+		<article>
+			{{slide}}
+		</article>
+	  </slide>
+	{% endfor %}
+{% endblock %}

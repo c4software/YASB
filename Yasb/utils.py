@@ -1,4 +1,12 @@
 import re
+import unicodedata
+
+def format_title_to_filename(s):
+    return '-'.join(strip_special(s).split())
+
+def strip_special(s):
+    ascii_letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 "
+    return ''.join(x for x in unicodedata.normalize('NFKD', s) if x in ascii_letters).lower()
 
 def truncate_html_words(s, num, end_text='...'):
     """Truncates HTML to a certain number of words (not counting tags and

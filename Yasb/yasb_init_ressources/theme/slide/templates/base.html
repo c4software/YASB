@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stage 2012</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" media="all" href="./theme/theme/css/default.css">
+	<link rel="stylesheet" media="all" href="./theme/theme/css/fonts.css">
+	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./theme/theme/css/phone.css">
+	<base target="_blank"> <!-- This amazingness opens all links in a new tab. -->
+	<script data-main="./theme/js/slides" src="./theme/js/require-1.0.8.min.js"></script>
+</head>
+<body style="opacity: 0">
+
+	<slides class="layout-widescreen">
+		{% block content %}{% endblock %}
+		<slide class="backdrop"></slide>
+	</slides>
+
+<!--[if IE]>
+  <script src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+  <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+</html>

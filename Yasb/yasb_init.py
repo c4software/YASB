@@ -35,7 +35,8 @@ def main():
 							"input":"",
 							"output":"",
 							"plugins":[],
-							"theme":""}
+							"theme":"",
+							"title_as_name":False}
 
 	# Base settings
 	print "\nBase settings :"
@@ -49,6 +50,11 @@ def main():
 	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
 	settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
+	settings_template["title_as_name"] 	= wait_for_input("Use title from fields for the output html filename (If title is defined in fields only)? (Y/n)","Y")
+	if settings_template["title_as_name"] is not "Y" or settings_template["title_as_name"] is not "y":
+		settings_template["title_as_name"] = False
+	else:
+		settings_template["title_as_name"] = True
 
 	# Plugins settings
 	print "\nPlugin settings :"

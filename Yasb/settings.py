@@ -1,4 +1,3 @@
-# TODO GERER LE SET DE VALUES ++ VALEUR PAR DEFAULT
 class Settings():
 	_default_values = 	{"site_title":"", 
 						"author":"",
@@ -8,7 +7,9 @@ class Settings():
 						"plugin_folder":"plugins",
 						"plugins":[],
 						"theme":"./",
-						"static":""}
+						"static":"",
+						"title_as_name":False
+						}
 
 	values = {}
 	def __init__(self, input_val):
