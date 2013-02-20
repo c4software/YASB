@@ -48,18 +48,18 @@ def main():
 	settings_template["url"] 		= wait_for_input("Url (http://) : ","http://")
 	settings_template["input"] 		= wait_for_input("Input folder (Where you rst files will be) : (./source/)","./source/")
 	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
-	settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
+	#settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
 	settings_template["title_as_name"] 	= wait_for_input("Use title from fields for the output html filename (If title is defined in fields only)? (Y/n)","Y")
-	if settings_template["title_as_name"] is not "Y" or settings_template["title_as_name"] is not "y":
-		settings_template["title_as_name"] = False
-	else:
+	if settings_template["title_as_name"].lower() == "y":
 		settings_template["title_as_name"] = True
+	else:
+		settings_template["title_as_name"] = False
 
 	# Plugins settings
 	print "\nPlugin settings :"
 	print "-----------------\n"
-	available_plugins = [("blog","A simple blog plugin. Provide Pagination, rss, archive, draft"),("pyscss","SCSS compiler. REQUIRE PyScss"),("sitemap","Sitemap generator"),("static","Move defined static folder content to the output"),("theme","Move the user theme to the output folder.")]
+	available_plugins = [("blog","A simple blog plugin. Provide Pagination, rss, archive, draft"),("pyscss","SCSS compiler. REQUIRE PyScss"),("sitemap","Sitemap generator"),("slide","Simple slide plugin based on the Google Slide source"),("static","Move defined static folder content to the output"),("theme","Move the user theme to the output folder.")]
 	selected_plugins = []
 	for plugin,description in available_plugins:
 		choice = None
@@ -83,6 +83,15 @@ def main():
 
 	settings_template["plugins"] = selected_plugins
 
+	# Demande du theme
+	print "\Choose your theme :"
+	print "-----------------\n"
+	choosen_theme = 0
+	theme = ["classic","slide"]
+	while choosen_theme not in ["1","2"]:
+		choosen_theme 	= wait_for_input("Theme (1 or 2): \n 1 - Classic (default) \n 2 - Slide \nYour choice : ","1")
+	settings_template["theme"] = "./theme/"+theme[int(choosen_theme)-1]+"/"
+
 	# Init de quelques lien pour de la demo
 	settings_template["links"] = (('Home', '/'),('Yasb', 'https://github.com/c4software/YASB'))
 
@@ -90,7 +99,7 @@ def main():
 	output_settings = "settings = {0}".format(json.dumps(settings_template, separators=(',', ': '), indent=4, sort_keys=True))
 	# Ecriture du fichier params.py sur disque
 	f = open("params.py","w")
-	f.write(output_settings)
+	f.write(output_settings.replace("false","False").replace("true","True"))
 	f.close()
 
 	# Creation des dossiers input_folder / output_folder / plugins (si non existant)
@@ -101,11 +110,7 @@ def main():
 		os.makedirs(settings_template["output"])
 
 	if not os.path.exists(settings_template["theme"]):
-		#os.makedirs(settings_template["theme"])
-		#os.makedirs(settings_template["theme"]+"/static/")
-		#os.makedirs(settings_template["theme"]+"/templates/")
-		shutil.copytree(os.path.dirname(__file__)+"/yasb_init_ressources/theme/classic/", "./theme/classic")
-		# os.path.dirname(__file__) << Emplacement du script python yasb-init (va permettre de deplacer le theme "classic")
+		shutil.copytree(os.path.dirname(__file__)+"/yasb_init_ressources/theme/"+theme[int(choosen_theme)-1]+"/", "./theme/"+theme[int(choosen_theme)-1])
 
 	if not os.path.exists("./plugins/"):
 		os.makedirs("./plugins/")

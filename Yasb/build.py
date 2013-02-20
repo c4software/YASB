@@ -81,7 +81,7 @@ def main():
 			# Naming the output file
 			if "page" not in fields:
 				# If not any name is defined in the rst we generate a name
-				if settings.get('title_as_name') and "title" in fields:
+				if settings.get('title_as_name') and fields["title"] != "":
 					# Use the title inside fields to name the output file.
 					fields['page'] = format_title_to_filename(fields['title'])+".html"
 				else:
