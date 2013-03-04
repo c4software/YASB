@@ -19,8 +19,6 @@ class Plugin():
 		except:
 			logging.error("[Blog] RSS Template not found for rendering. You need to add the {1} into {0}".format(settings.get("theme"), self.params["rss_template"]))
 
-		pass
-
 	def run(self, settings, content, fields):
 		logging.debug("[Slide] Ajout de la slide")
 		self.slides.append([fields,content])

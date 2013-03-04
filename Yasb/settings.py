@@ -8,6 +8,7 @@ class Settings():
 						"plugins":[],
 						"theme":"./",
 						"static":"",
+						"diff_build":False,
 						"title_as_name":False
 						}
 

@@ -36,6 +36,7 @@ def main():
 							"output":"",
 							"plugins":[],
 							"theme":"",
+							"diff_build":False,
 							"title_as_name":False}
 
 	# Base settings
@@ -46,11 +47,17 @@ def main():
 
 	settings_template["author"] 	= wait_for_input("Author : ")
 	settings_template["url"] 		= wait_for_input("Url (http://) : ","http://")
-	settings_template["input"] 		= wait_for_input("Input folder (Where you rst files will be) : (./source/)","./source/")
-	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/)","./output/")
+	settings_template["input"] 		= wait_for_input("Input folder (Where you rst files will be) : (./source/) ","./source/")
+	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/) ","./output/")
 	#settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
-	settings_template["title_as_name"] 	= wait_for_input("Use title from fields for the output html filename (If title is defined in fields only)? (Y/n)","Y")
+	settings_template["diff_build"] = wait_for_input("Build only new RST file (Warning this parameter is incompatible with blog and sitemap plugin) ? (N/y) ","n")
+	if settings_template["diff_build"].lower() == "y":
+		settings_template["diff_build"] = True
+	else:
+		settings_template["diff_build"] = False
+
+	settings_template["title_as_name"] 	= wait_for_input("Use title from fields for the output html filename (If title is defined in fields only)? (Y/n) ","Y")
 	if settings_template["title_as_name"].lower() == "y":
 		settings_template["title_as_name"] = True
 	else:

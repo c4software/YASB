@@ -17,7 +17,7 @@ class Plugin():
 	def __init__(self, settings):
 		try:
 			from scss import Scss
-			self.css = Scss()
+			self.css = Scss(scss_opts = {'compress_reverse_colors': False})
 		except Exception as e:
 			logging.error("[SCSS] To use this plugin you need to install pyScss (example: pip install pyScss)")
 			return None

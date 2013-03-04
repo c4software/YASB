@@ -9,6 +9,7 @@ from Yasb import colorer
 import datetime
 
 import argparse
+import time
 
 def main():
 	sys.path.append(os.getcwd())
@@ -33,6 +34,14 @@ def main():
 		logging.error("Can't import settings in your params.py")
 		exit()
 
+	# Get the last build date
+	previous_build_date = 0
+	if settings.get("diff_build",False):
+		try:
+			previous_build_date = open(".lastbuild", 'r').read()
+		except:
+			previous_build_date = 0
+
 	# Init plugins defined in the user configuration
 	# Try to import :
 	# - In the plugin folder of the project (allow user to overide system plugin)
@@ -48,7 +57,7 @@ def main():
 					# If plugin is not an user plugin falback to system plugin
 					plugins.append(getattr(__import__('Yasb.plugins.'+plugin, fromlist=['Plugin']), 'Plugin')(settings))
 				except:
-					logging.error("[Core] Plugin : {0} is unknown.".format(plugin))
+					logging.error("[Core] Disable : {0} plugin.".format(plugin))
 		else:
 			logging.warn("[Core] Ignoring plugin \"{0}\". (/!\ Disabled by command line)".format(plugin))
 
@@ -58,6 +67,11 @@ def main():
 
 		if infile.startswith("."):
 			continue
+
+		if settings.get("diff_build",False):
+			if float(previous_build_date) > float(os.path.getmtime(settings.get("input")+infile)):
+				logging.info("[Core] Ignoring {0} file not modified since the lastbuild.".format(infile))
+				continue
 
 		logging.info("[Core] Processing : "+infile)
 		content,fields = rst.run(open(settings.get("input")+infile, 'r').read())
@@ -102,4 +116,8 @@ def main():
 	for plugin in plugins:
 		plugin.teardown(settings)
 
-
+	# If enabled write the build date into the disk.
+	if settings.get("diff_build",False):
+		f = open(".lastbuild", 'w')
+		f.write(str(time.time()))
+		f.close()
