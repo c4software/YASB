@@ -48,6 +48,16 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 			"output":"./output/",
 			"plugins":[],
 			"theme":"./theme/demo/"}
+	settings = {"site_title":"Demo blog", # Title of the website
+			"author":"Valentin Brosseau", # Author of the website
+			"url":"http://demo.url", # Url of the website
+			"input":"./source/", # RST source file, Location of RST file
+			"output":"./output/", # Output folder for the build
+			"plugins":[], # Enable plugin for this demo project
+			"title_as_name": False, # Use the title in the RST as the filename for the output
+			"theme":"./theme/demo/", # Folder of the theme
+			"build_diff":False, # Enable the differencial build, if True the Yasb script will build only New or Modified file since the last build. Be carrefull this 
+			}
 
 For a full example you can take a look at the Demo Project.
 
