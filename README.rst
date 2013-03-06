@@ -41,13 +41,6 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 
 .. code:: python
 
-	settings = 	{"site_title":"Demo blog", 
-			"author":"Valentin Brosseau",
-			"url":"http://demo.url",
-			"input":"./source/",
-			"output":"./output/",
-			"plugins":[],
-			"theme":"./theme/demo/"}
 	settings = {"site_title":"Demo blog", # Title of the website
 			"author":"Valentin Brosseau", # Author of the website
 			"url":"http://demo.url", # Url of the website
