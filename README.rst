@@ -50,7 +50,7 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 			"title_as_name": False, # Use the title in the RST as the filename for the output
 			"theme":"./theme/demo/", # Folder of the theme
 			"build_diff":False, # Enable the differencial build, if True the Yasb script will build only New or Modified file since the last build. Be carrefull this 
-			}
+		}
 
 For a full example you can take a look at the Demo Project.
 
