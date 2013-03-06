@@ -10,7 +10,7 @@ YASB (Yet Another Static Builder) is a Website generator written in Python_. Wit
 
 Features
 --------
-* Write your article using reStructuredText_.
+* Write your article using reStructuredText_. (You can also add Jinja2 synthax if you want -Example_-)
 * Make theme for your project using Jinja2_ (with Code Syntax Highlighting).
 * A plugin mechanism to extend YASB.
 * CLI tool to invoke the build of your project.
@@ -93,3 +93,4 @@ SOON
 .. _reStructuredText: http://docutils.sourceforge.net/rst.html
 .. _Jinja2: http://jinja.pocoo.org/
 .. _pyScss: https://github.com/Kronuz/pyScss
+.. _Example: https://raw.github.com/c4software/YASB-SAMPLE/master/source/site_settings_demo.rst
