@@ -74,7 +74,7 @@ def main():
 				continue
 
 		logging.info("[Core] Processing : "+infile)
-		content,fields = rst.run(open(settings.get("input")+infile, 'r').read())
+		content,fields = rst.run(open(settings.get("input")+infile, 'r').read(), settings)
 		
 		output_dir = settings.get("output")
 

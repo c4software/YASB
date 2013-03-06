@@ -1,12 +1,18 @@
 from docutils.core import publish_parts, publish_doctree
 from docutils.nodes import docinfo
 
-def run(text):
+import Yasb.htmlbuilder
+
+def run(text, settings={}):
 	# Extraction des champs, et transformation du rst en html
 	rst = publish_parts(text, writer_name="html")
 	fields = extract_fields(text)
 	fields['title'] = rst['title']
+	rst['body'] = body_as_template(rst['body'], fields, settings)
 	return rst['body'], fields
+
+def body_as_template(content, fields, settings):
+	return Yasb.htmlbuilder.render(content, fields, settings)
 
 def extract_fields(text):
 	doctree = publish_doctree(text)
