@@ -37,7 +37,7 @@ class Plugin():
 		f = open(settings.get("output")+"sitemap.xml", 'w')
 		f.write(self.xml_header)
 		for link in self.links:
-			f.write("<url><loc>{0}</loc></url>\n".format(link))
+			f.write("<url><loc>{0}/{1}</loc></url>\n".format(settings.get("url"),link))
 		f.write(self.xml_footer)
 		f.close()
 		pass
