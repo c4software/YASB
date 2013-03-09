@@ -37,7 +37,7 @@ Fast usage
 
 Project Structure
 -----------------
-The only **NEEDED** file in your project is the **params.py**. This file must contain at least :
+The only **NEEDED** file in your project is the **params.py**. This file contain at least :
 
 .. code:: python
 
@@ -49,10 +49,11 @@ The only **NEEDED** file in your project is the **params.py**. This file must co
 			"plugins":[], # Enable plugin for this demo project
 			"title_as_name": False, # Use the title in the RST as the filename for the output
 			"theme":"./theme/demo/", # Folder of the theme
-			"build_diff":False, # Enable the differencial build, if True the Yasb script will build only New or Modified file since the last build. Be carrefull this 
+			"build_diff":False, # Enable the differencial build, if True the Yasb script will build only New or Modified file since the last build. 
+			# ... 
 		}
 
-For a full example you can take a look at the Demo Project.
+For a full/working example you can take a look at the Sample Project (`YASB-SAMPLE`_).
 
 **Note:** *All Flags/Settings you put in this stucture will be available in your templates.*
 
@@ -65,7 +66,7 @@ Usage Documentation
 To build your project you need to run the "yasb" command directly from the project folder.
 
 	# yasb --help
-	usage: yasb [-h] [-v] [--ignore PLUGIN] [--debug]
+	usage: yasb [-h] [-v] [--ignore PLUGIN] [--debug] [--silent]
 
 	Yasb builder tool
 
@@ -74,6 +75,7 @@ To build your project you need to run the "yasb" command directly from the proje
 	  -v, --version    show program's version number and exit
 	  --ignore PLUGIN  Ignore the execution of the specified plugin (Overide your params.py)
 	  --debug          Change the log level to debug
+	  --silent         Disable output (except error)
 
 * Classic usage :
 	# yasb

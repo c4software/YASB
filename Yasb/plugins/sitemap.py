@@ -15,9 +15,9 @@ class Plugin():
 
 	def __init__(self, settings):
 		logging.debug("[Sitemap] : init")
-		if settings.get("diff_build",False):
-			logging.error("[Sitemap] : You can't set diff_build and the Sitemap plugin")
-			raise
+		# if settings.get("diff_build",False):
+		# 	logging.error("[Sitemap] : You can't set diff_build and the Sitemap plugin")
+		# 	raise
 		pass
 
 	def run(self, settings, content, fields):

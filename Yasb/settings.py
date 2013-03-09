@@ -9,6 +9,8 @@ class Settings():
 						"theme":"./",
 						"static":"",
 						"diff_build":False,
+						"diff_build_db":".diff_build_db",
+						"lastbuild_file":".lastbuild",
 						"title_as_name":False
 						}
 

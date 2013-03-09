@@ -11,6 +11,11 @@ import datetime
 import argparse
 import time
 
+try:
+	import cpickle as pickle
+except:
+	import pickle
+
 def main():
 	sys.path.append(os.getcwd())
 
@@ -18,13 +23,20 @@ def main():
 	parser = argparse.ArgumentParser(version="0.1",description='Yasb builder tool')
 	parser.add_argument('--ignore', action="append", default=[], help="Ignore the execution of the specified plugin. Overide your params.py")
 	parser.add_argument('--debug', action="store_true", default=False, help="Change the log level to debug")
+	parser.add_argument('--silent', action="store_true", default=False, help="Disable output (except error)")
 	arg = parser.parse_args()
+
+	# Previous parsing data
+	previoud_parsing = {}
 
 	# Set the log level according to the user specification
 	if arg.debug:
 		logging.basicConfig(format="%(message)s", level=logging.DEBUG)
 	else:
 		logging.basicConfig(format="%(message)s", level=logging.INFO)
+
+	if arg.silent:
+		logging.getLogger().setLevel(logging.ERROR)
 
 	try:
 		import params
@@ -38,7 +50,8 @@ def main():
 	previous_build_date = 0
 	if settings.get("diff_build",False):
 		try:
-			previous_build_date = open(".lastbuild", 'r').read()
+			previous_build_date = open(settings.get("lastbuild_file"), 'r').read()
+			previoud_parsing = pickle.load(open(settings.get("diff_build_db"),"rb"))
 		except:
 			previous_build_date = 0
 
@@ -68,44 +81,54 @@ def main():
 		if infile.startswith("."):
 			continue
 
-		if settings.get("diff_build",False):
-			if float(previous_build_date) > float(os.path.getmtime(settings.get("input")+infile)):
-				logging.info("[Core] Ignoring {0} file not modified since the lastbuild.".format(infile))
+		if settings.get("diff_build",False) and float(previous_build_date) > float(os.path.getmtime(settings.get("input")+infile)):
+			logging.warn("[Core] Ignoring {0} file not modified since the lastbuild.".format(infile))
+			try:
+				content,fields = previoud_parsing[settings.get("input")+infile]
+			except:
+				logging.warn("[Core] Ignoring {0} file not found in db.".format(infile))
 				continue
-
-		logging.info("[Core] Processing : "+infile)
-		content,fields = rst.run(open(settings.get("input")+infile, 'r').read(), settings)
-		
-		output_dir = settings.get("output")
-
-		# If the article has the nosave field we skip the writing to disk action
-		if "nosave" not in fields:
+		else:
+			logging.info("[Core] Processing : "+infile)
+			content,fields = rst.run(open(settings.get("input")+infile, 'r').read(), settings)
 			
-			result_page = htmlbuilder.build_html(content,fields, settings)
-			# Create output dir if needed
-			if not os.path.exists(output_dir):
-					os.makedirs(output_dir)
+			# Append to the field the input_filename
+			fields["input_filename"] = settings.get("input")+infile
 
-			# Create output path if needed
-			if "path" in fields:
-				output_dir = output_dir+fields['path']
+			output_dir = settings.get("output")
+
+			# If the article has the nosave field we skip the writing to disk action
+			if "nosave" not in fields:
+				
+				result_page = htmlbuilder.build_html(content,fields, settings)
+				# Create output dir if needed
 				if not os.path.exists(output_dir):
-					os.makedirs(output_dir)
-			
-			# Naming the output file
-			if "page" not in fields:
-				# If not any name is defined in the rst we generate a name
-				if settings.get('title_as_name') and fields["title"] != "":
-					# Use the title inside fields to name the output file.
-					fields['page'] = format_title_to_filename(fields['title'])+".html"
-				else:
-					fileName, fileExtension = os.path.splitext(infile)
-					fields['page'] = fileName+".html"
+						os.makedirs(output_dir)
 
-			logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
-			f = open(output_dir+fields['page'], 'w')
-			f.write(result_page.encode('utf8'))
-			f.close()
+				# Create output path if needed
+				if "path" in fields:
+					output_dir = output_dir+fields['path']
+					if not os.path.exists(output_dir):
+						os.makedirs(output_dir)
+				
+				# Naming the output file
+				if "page" not in fields:
+					# If not any name is defined in the rst we generate a name
+					if settings.get('title_as_name') and fields["title"] != "":
+						# Use the title inside fields to name the output file.
+						fields['page'] = format_title_to_filename(fields['title'])+".html"
+					else:
+						fileName, fileExtension = os.path.splitext(infile)
+						fields['page'] = fileName+".html"
+
+				logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
+				f = open(output_dir+fields['page'], 'w')
+				f.write(result_page.encode('utf8'))
+				f.close()
+
+				if settings.get("diff_build",False):
+					# If we are in diff build mode, we save the result of parsing (to speed up next build)
+					previoud_parsing[settings.get("input")+infile] = (content, fields)
 
 		# Execute the "run" action of each enable plugin
 		for plugin in plugins:
@@ -116,8 +139,11 @@ def main():
 	for plugin in plugins:
 		plugin.teardown(settings)
 
-	# If enabled write the build date into the disk.
+	# Diff mode enabled ?
 	if settings.get("diff_build",False):
-		f = open(".lastbuild", 'w')
+		# If enabled write the build date into the disk.
+		f = open(settings.get("lastbuild_file"), 'w')
 		f.write(str(time.time()))
 		f.close()
+		# Same for the process data
+		pickle.dump(previoud_parsing, open(settings.get("diff_build_db"),"wb"), protocol=pickle.HIGHEST_PROTOCOL)

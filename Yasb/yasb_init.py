@@ -51,7 +51,7 @@ def main():
 	settings_template["output"] 	= wait_for_input("Output folder (Where the result will be put) : (./output/) ","./output/")
 	#settings_template["theme"] 		= wait_for_input("Emplacement of the theme : (./theme/classic/)","./theme/classic/")
 
-	settings_template["diff_build"] = wait_for_input("Build only new RST file (Warning this parameter is incompatible with blog and sitemap plugin) ? (N/y) ","n")
+	settings_template["diff_build"] = wait_for_input("Build only new RST file (Speed up the process, but create a file to memorize old article) ? (N/y) ","n")
 	if settings_template["diff_build"].lower() == "y":
 		settings_template["diff_build"] = True
 	else:

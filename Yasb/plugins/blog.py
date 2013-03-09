@@ -43,9 +43,9 @@ class Plugin():
 		if settings.get("blog_settings", None):
 			 self.params = dict(self.params.items() + settings.get("blog_settings").items())
 
-		if settings.get("diff_build",False):
-			logging.error("[Blog] You can't set diff_build and the Blog plugin")
-			raise
+		# if settings.get("diff_build",False):
+		# 	logging.error("[Blog] You can't set diff_build and the Blog plugin")
+		# 	raise
 
 		# Read the template to render article list (Template for page)
 		try:
