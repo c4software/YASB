@@ -62,33 +62,33 @@ For a complete... complete example see the settings of my current blog :
 .. code:: python
 
 	settings = {"site_title":"Un peu de tout, un peu de rien...", 
-		"author":"Valentin Brosseau",
-		"url":"http://blog.lesite.us",
-		"input":"./source/",
-		"output":"./output/",
+			"author":"Valentin Brosseau",
+			"url":"http://blog.lesite.us",
+			"input":"./source/",
+			"output":"./output/",
 
-		"title_as_name":True,
+			"title_as_name":True,
 
-		"plugins":['sitemap','blog','pyscss',"theme","static"],
-		
-		"static_settings":"",
-		"theme":"./theme/valentin/",
-		"blog_settings":{"index_page":"index","nbchar_resume":100,"nb_per_page":7},
-		"scss_settings":{"files":[('main.scss','main.css'),('pygments.scss','pygments.css')],"path":"./theme/valentin/static/styles/"},
+			"plugins":['sitemap','blog','pyscss',"theme","static"],
+			
+			"static_settings":"",
+			"theme":"./theme/valentin/",
+			"blog_settings":{"index_page":"index","nbchar_resume":100,"nb_per_page":7},
+			"scss_settings":{"files":[('main.scss','main.css'),('pygments.scss','pygments.css')],"path":"./theme/valentin/static/styles/"},
 
-		"diff_build":True,
-		"lastbuild_file":"./output/.lastbuild",
-		"diff_build_db":"./output/.diff_build_db",
+			"diff_build":True,
+			"lastbuild_file":"./output/.lastbuild",
+			"diff_build_db":"./output/.diff_build_db",
 
-		"links":(
-				    ('Accueil', '/'),
-				    ('Archives', '/archives.html'),
-				    ('Moi', 'http://valentinbrosseau.lesite.us/'),
-				    ('Twitter', 'http://twitter.com/c4software'),
-				    ('Google+', 'https://plus.google.com/104883394321573041618/about'),
-				    ('Flux RSS', 'feeds/all.atom.xml')
-		        )
-		}
+			"links":(
+					    ('Accueil', '/'),
+					    ('Archives', '/archives.html'),
+					    ('Moi', 'http://valentinbrosseau.lesite.us/'),
+					    ('Twitter', 'http://twitter.com/c4software'),
+					    ('Google+', 'https://plus.google.com/104883394321573041618/about'),
+					    ('Flux RSS', 'feeds/all.atom.xml')
+			        )
+			}
 
 Demo project
 ------------
@@ -117,6 +117,60 @@ To build your project you need to run the "yasb" command directly from the proje
 	
 
 More documentation : Soon
+
+Simplify the process
+--------------------
+To simplify the build/update/etc.. process you can write a simple makefile 
+
+.. code:: makefile
+
+	BASEDIR=$(PWD)
+	OUTPUTDIR=$(BASEDIR)/output
+
+	SSH_HOST=YOUR_IP
+	SSH_PORT=22
+	SSH_USER=YOURUSER
+	SSH_TARGET_DIR=YOURPATH
+
+	minimal: 
+		yasb --ignore static --ignore theme --ignore pyscss --silent
+
+	minimal-verbose: 
+		yasb --ignore static --ignore theme --ignore pyscss
+
+	help:
+		@echo '                                '
+		@echo 'Usage:                          '
+		@echo '   make minimal                 '
+		@echo '   make minimal-verbose         '
+		@echo '   make full	                   '
+		@echo '   make clean                   '
+		@echo '   make rsync	               '
+		@echo '                                '
+
+	full:
+		yasb
+
+	clean:
+		rm -rf $(OUTPUTDIR)
+		mkdir $(OUTPUTDIR)
+
+	rsync:
+		rsync -avzh --exclude '.diff_build_db' --exclude '.lastbuild' --delete -e "ssh -p $(SSH_PORT)" $(OUTPUTDIR)/ $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
+
+	.PHONY: help clean minimal minimal-verbose full rsync
+
+With this makefile you can run command like :
+
+* make **clean** : Empty your output path
+* make **minimal** : Build your project without copying theme, building pyscss and copying static
+* make **minimal-verbose** : Same as minimal but with some output
+* make **full** : Build your project with default settings (Usefull for the first init)
+* make **rsync** : Sync the output result with your personnal webserver
+
+For example to init your project you can do :
+
+	make clean full
 
 
 Plugins usage Documentation
