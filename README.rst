@@ -120,7 +120,7 @@ More documentation : Soon
 
 Simplify the process
 --------------------
-To simplify the build/update/etc.. process you can write a simple makefile 
+To simplify the build/update/etc.. process you can write a simple makefile like this one : 
 
 .. code:: makefile
 
