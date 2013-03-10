@@ -172,6 +172,7 @@ For example to init your project you can do :
 
 	make clean full
 
+** Note ** By default running make will do the **minimal** rule
 
 Plugins usage Documentation
 ---------------------------
