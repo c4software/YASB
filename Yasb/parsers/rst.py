@@ -5,7 +5,7 @@ import Yasb.htmlbuilder
 
 def run(text, settings={}):
 	# Extraction des champs, et transformation du rst en html
-	rst = publish_parts(text, writer_name="html")
+	rst = publish_parts(text, writer_name="html", settings_overrides={'syntax_highlight': 'short'})
 	fields = extract_fields(text)
 	fields['title'] = rst['title']
 	rst['body'] = body_as_template(rst['body'], fields, settings)
