@@ -10,7 +10,8 @@ except ImportError:
 
 entry_points = {'console_scripts': [
                                     'yasb = Yasb.build:main',
-                                    'yasb-init = Yasb.yasb_init:main_script'
+                                    'yasb-init = Yasb.yasb_init:main_script',
+                                    'yasb-monitor = Yasb.yasb_monitor:main_script'
                                    ]
                 }
 
