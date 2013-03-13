@@ -127,10 +127,10 @@ To simplify the build/update/etc.. process you can write a simple makefile like 
 	BASEDIR=$(PWD)
 	OUTPUTDIR=$(BASEDIR)/output
 
-	SSH_HOST=YOUR_IP
+	SSH_HOST=YOUR HOST
 	SSH_PORT=22
 	SSH_USER=YOURUSER
-	SSH_TARGET_DIR=YOURPATH
+	SSH_TARGET_DIR=YOURSERVERPATH
 
 	minimal: 
 		yasb --ignore static --ignore theme --ignore pyscss --silent
@@ -138,11 +138,15 @@ To simplify the build/update/etc.. process you can write a simple makefile like 
 	minimal-verbose: 
 		yasb --ignore static --ignore theme --ignore pyscss
 
+	autobuild:
+		yasb-monitor --ignore static --ignore theme --ignore pyscss --silent
+
 	help:
 		@echo '                                '
 		@echo 'Usage:                          '
 		@echo '   make minimal                 '
 		@echo '   make minimal-verbose         '
+		@echo '   make autobuild               '
 		@echo '   make full	                   '
 		@echo '   make clean                   '
 		@echo '   make rsync	               '
@@ -158,15 +162,17 @@ To simplify the build/update/etc.. process you can write a simple makefile like 
 	rsync:
 		rsync -avzh --exclude '.diff_build_db' --exclude '.lastbuild' --delete -e "ssh -p $(SSH_PORT)" $(OUTPUTDIR)/ $(SSH_USER)@$(SSH_HOST):$(SSH_TARGET_DIR)
 
-	.PHONY: help clean minimal minimal-verbose full rsync
+	.PHONY: help clean minimal minimal-verbose autobuild full rsync
+
 
 With this makefile you can run command like :
 
-* make **clean** : Empty your output path
-* make **minimal** : Build your project without copying theme, building pyscss and copying static
-* make **minimal-verbose** : Same as minimal but with some output
-* make **full** : Build your project with default settings (Usefull for the first init)
-* make **rsync** : Sync the output result with your personnal webserver
+* make **clean** : Empty your output path.
+* make **minimal** : Build your project without copying theme, building pyscss and copying static.
+* make **minimal-verbose** : Same as minimal but with some output.
+* make **full** : Build your project with default settings (Usefull for the first init).
+* make **rsync** : Sync the output result with your personnal webserver.
+* make **autobuild** : Autobuild the website when a change is detected in the source folder
 
 For example to init your project you can do :
 
