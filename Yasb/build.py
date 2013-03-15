@@ -82,13 +82,17 @@ def main():
 			continue
 
 		if settings.get("diff_build",False) and float(previous_build_date) > float(os.path.getmtime(settings.get("input")+infile)):
-			logging.warn("[Core] Ignoring {0} file not modified since the lastbuild.".format(infile))
+			logging.warn("[Core] file ({0}) not modified since the lastbuild.".format(infile))
 			try:
 				content,fields = previoud_parsing[settings.get("input")+infile]
+				fields["loaded_from_db"]=True # Content and fields loaded from DB. We add a special field to indicate the source of file 
 			except:
-				logging.warn("[Core] Ignoring {0} file not found in db.".format(infile))
+				logging.error("[Core] Ignoring {0} file not found in db.".format(infile))
 				continue
 		else:
+			# New file OR update file
+			# Load it from the disk
+			# Parsing / rendering
 			logging.info("[Core] Processing : "+infile)
 			content,fields = rst.run(open(settings.get("input")+infile, 'r').read(), settings)
 			

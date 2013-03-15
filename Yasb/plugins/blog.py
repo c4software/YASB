@@ -96,7 +96,7 @@ class Plugin():
 			logging.debug("[Blog] Element : {0} not containing the field {1}".format(fields['page'], self.params['rst_type']))
 
 	def teardown(self, settings):
-		# On trie les articles par date
+		# Sort article with the date
 		self.part_article.sort(key=lambda r: r[0]['date'], reverse=True)
 		self.write_page(settings)
 		if self.params['rss']:
@@ -131,7 +131,6 @@ class Plugin():
 		current_page = 1
 		pagination = range(0, len(self.part_article), self.params["nb_per_page"])
 		for i in pagination:
-
 			# Gestion de la pagination
 			paginator = {}
 			if current_page < len(pagination):
@@ -151,14 +150,24 @@ class Plugin():
 					# Sinon on genere la page correspondante
 					paginator["previous_page"] = self.params["other_page"]+str(current_page-1)
 
+			# If one article (or more) on the current set is a new or a modify article we don't skip the current writing
+			if all("loaded_from_db" in d[0] for d in self.part_article[i:i+self.params["nb_per_page"]]):
+				# All article in the set are loaded from the db we skip the writing of the current page
+				# logging.debug("Ignoring writing the pagination number {0}".format(current_page))
+				current_page = current_page + 1
+				continue
 
 			# Render the template output
 			output_content = render(self.template_string, {"articles":self.part_article[i:i+self.params["nb_per_page"]], "nb_page":nb_page,"current_page":current_page,"paginator":paginator}, settings) 
 
+			# Generate the name of the current output file.
 			if i == 0:
+				# First iteration
+				# This is the first page of the pagination
 				logging.debug("[Blog] Output to {0}.html".format(self.params["index_page"]))
 				output_file = settings.get("output")+self.params["index_page"]+".html"
 			else:
+				# Other iteration, we take the current page number
 				logging.debug("[Blog] Output to {0}{1}.html".format(self.params["other_page"], current_page))
 				output_file = settings.get("output")+"{0}{1}.html".format(self.params["other_page"], current_page)
 
