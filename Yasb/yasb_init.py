@@ -96,7 +96,7 @@ def main():
 	choosen_theme = 0
 	theme = ["classic","slide"]
 	while choosen_theme not in ["1","2"]:
-		choosen_theme 	= wait_for_input("Theme (1 or 2): \n 1 - Classic (default) \n 2 - Slide \nYour choice : ","1")
+		choosen_theme 	= wait_for_input("Theme : \n 1 - Classic (default) \nYour choice : ","1")
 	settings_template["theme"] = "./theme/"+theme[int(choosen_theme)-1]+"/"
 
 	# Init de quelques lien pour de la demo
