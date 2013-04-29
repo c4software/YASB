@@ -126,7 +126,7 @@ class Plugin():
 	def write_page(self, settings):
 		logging.info("[Blog] Writing pages")
 
-		nb_page = (len(self.part_article)/self.params['nb_per_page']) + 1
+		nb_page = (len(self.part_article)/self.params['nb_per_page'])
 
 		current_page = 1
 		pagination = range(0, len(self.part_article), self.params["nb_per_page"])
