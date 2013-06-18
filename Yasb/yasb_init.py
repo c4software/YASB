@@ -66,7 +66,7 @@ def main():
 	# Plugins settings
 	print "\nPlugin settings :"
 	print "-----------------\n"
-	available_plugins = [("blog","A simple blog plugin. Provide Pagination, rss, archive, draft"),("pyscss","SCSS compiler. REQUIRE PyScss"),("sitemap","Sitemap generator"),("slide","Simple slide plugin based on the Google Slide source"),("static","Move defined static folder content to the output"),("theme","Move the user theme to the output folder.")]
+	available_plugins = [("blog","A simple blog plugin. Provide Pagination, rss, archive, draft"),("pyscss","SCSS compiler. REQUIRE PyScss"),("sitemap","Sitemap generator"),("static","Move defined static folder content to the output"),("theme","Move the user theme to the output folder.")]
 	selected_plugins = []
 	for plugin,description in available_plugins:
 		choice = None
