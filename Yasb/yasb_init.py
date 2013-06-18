@@ -79,7 +79,7 @@ def main():
 	# static settings
 	if "static" in selected_plugins:
 		static_settings = wait_for_input("Emplacement of static file (./static/): ","./static/")
-		settings_template["static_settings"]:static_settings
+		settings_template["static_settings"] = static_settings
 		if not os.path.exists(static_settings):
 			os.makedirs(static_settings)
 
