@@ -79,6 +79,7 @@ def main():
 	# static settings
 	if "static" in selected_plugins:
 		static_settings = wait_for_input("Emplacement of static file (./static/): ","./static/")
+		settings_template["static_settings"]:static_settings
 		if not os.path.exists(static_settings):
 			os.makedirs(static_settings)
 
@@ -94,8 +95,8 @@ def main():
 	print "\Choose your theme :"
 	print "-----------------\n"
 	choosen_theme = 0
-	theme = ["classic","slide"]
-	while choosen_theme not in ["1","2"]:
+	theme = ["classic"]
+	while choosen_theme not in ["1"]:
 		choosen_theme 	= wait_for_input("Theme : \n 1 - Classic (default) \nYour choice : ","1")
 	settings_template["theme"] = "./theme/"+theme[int(choosen_theme)-1]+"/"
 
