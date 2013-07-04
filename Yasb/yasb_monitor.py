@@ -35,7 +35,10 @@ def main():
 		if max_mtime > last_mtime:
 			last_mtime = max_mtime
 			print "Build"
-			Yasb.build.main()
+			try:
+				Yasb.build.main()
+			except:
+				pass
 		time.sleep(wait)
 
 def main_script():
