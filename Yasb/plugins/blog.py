@@ -1,10 +1,10 @@
 import logging
+import os 
+import math
+import datetime
 
 from Yasb.htmlbuilder import render
 from Yasb.utils import truncate_html_words
-import datetime
-
-import os
 
 class Plugin():
 	""" Module generation de blog 
@@ -126,7 +126,7 @@ class Plugin():
 	def write_page(self, settings):
 		logging.info("[Blog] Writing pages")
 
-		nb_page = (len(self.part_article)/self.params['nb_per_page'])
+		nb_page = int(math.ceil(len(self.part_article)/float(self.params['nb_per_page'])))
 
 		current_page = 1
 		pagination = range(0, len(self.part_article), self.params["nb_per_page"])
