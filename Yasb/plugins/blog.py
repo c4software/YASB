@@ -151,11 +151,11 @@ class Plugin():
 					paginator["previous_page"] = self.params["other_page"]+str(current_page-1)
 
 			# If one article (or more) on the current set is a new or a modify article we don't skip the current writing
-			if all("loaded_from_db" in d[0] for d in self.part_article[i:i+self.params["nb_per_page"]]):
-				# All article in the set are loaded from the db we skip the writing of the current page
-				# logging.debug("Ignoring writing the pagination number {0}".format(current_page))
-				current_page = current_page + 1
-				continue
+			# if all("loaded_from_db" in d[0] for d in self.part_article[i:i+self.params["nb_per_page"]]):
+			# 	# All article in the set are loaded from the db we skip the writing of the current page
+			# 	# logging.debug("Ignoring writing the pagination number {0}".format(current_page))
+			# 	current_page = current_page + 1
+			# 	continue
 
 			# Render the template output
 			output_content = render(self.template_string, {"articles":self.part_article[i:i+self.params["nb_per_page"]], "nb_page":nb_page,"current_page":current_page,"paginator":paginator}, settings) 
