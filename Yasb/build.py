@@ -74,17 +74,37 @@ def main():
 		else:
 			logging.warn("[Core] Ignoring plugin \"{0}\". (/!\ Disabled by command line)".format(plugin))
 
-	# Iterate over page
-	listing = os.listdir(settings.get("input"))
-	for infile in listing:
+	# Iterate over page	
+	processing_pages(settings.get("input"), "", settings, plugins, previous_build_date, previoud_parsing)
 
+	# Execute the teardown method of each plugin
+	for plugin in plugins:
+		plugin.teardown(settings)
+
+	# Diff mode enabled ?
+	if settings.get("diff_build",False):
+		# If enabled write the build date into the disk.
+		f = open(settings.get("lastbuild_file"), 'w')
+		f.write(str(time.time()))
+		f.close()
+		# Same for the process data
+		pickle.dump(previoud_parsing, open(settings.get("diff_build_db"),"wb"), protocol=pickle.HIGHEST_PROTOCOL)
+
+def processing_pages(path, folder, settings, plugins, previous_build_date, previoud_parsing):
+	listing = [("{}{}".format(path, f),f) for f in os.listdir(path)]
+	for path_in_file, infile in listing:
 		if infile.startswith("."):
 			continue
 
-		if settings.get("diff_build",False) and float(previous_build_date) > float(os.path.getmtime(settings.get("input")+infile)):
+		if os.path.isdir(path_in_file):
+			logging.warn("[Core] {} it's a directoy processing it.".format(infile))
+			processing_pages(path_in_file+"/", infile, settings, plugins, previous_build_date, previoud_parsing)
+			continue
+
+		if settings.get("diff_build",False) and float(previous_build_date) > float(os.path.getmtime(path_in_file)):
 			logging.warn("[Core] file ({0}) not modified since the lastbuild.".format(infile))
 			try:
-				content,fields = previoud_parsing[settings.get("input")+infile]
+				content,fields = previoud_parsing[path_in_file]
 				fields["loaded_from_db"]=True # Content and fields loaded from DB. We add a special field to indicate the source of file 
 			except:
 				logging.error("[Core] Ignoring {0} file not found in db.".format(infile))
@@ -93,11 +113,17 @@ def main():
 			# New file OR update file
 			# Load it from the disk
 			# Parsing / rendering
-			logging.info("[Core] Processing : "+infile)
-			content,fields = rst.run(open(settings.get("input")+infile, 'r').read(), settings)
+			logging.info("[Core] Processing : "+path_in_file)
+			content,fields = rst.run(open(path_in_file, 'r').read(), settings)
 			
 			# Append to the field the input_filename
-			fields["input_filename"] = settings.get("input")+infile
+			fields["input_filename"] = path_in_file
+
+			# If we are in a subfolder append
+			if "path" in fields:
+				fields['path'] = "{}/{}".format(fields['path'], folder)
+			else:
+				fields['path']  = "{}/".format(folder)
 
 			output_dir = settings.get("output")
 
@@ -132,22 +158,8 @@ def main():
 
 				if settings.get("diff_build",False):
 					# If we are in diff build mode, we save the result of parsing (to speed up next build)
-					previoud_parsing[settings.get("input")+infile] = (content, fields)
+					previoud_parsing[path_in_file] = (content, fields)
 
 		# Execute the "run" action of each enable plugin
 		for plugin in plugins:
 			plugin.run(settings=settings, content=content, fields=fields)
-
-
-	# Execute the teardown method of each plugin
-	for plugin in plugins:
-		plugin.teardown(settings)
-
-	# Diff mode enabled ?
-	if settings.get("diff_build",False):
-		# If enabled write the build date into the disk.
-		f = open(settings.get("lastbuild_file"), 'w')
-		f.write(str(time.time()))
-		f.close()
-		# Same for the process data
-		pickle.dump(previoud_parsing, open(settings.get("diff_build_db"),"wb"), protocol=pickle.HIGHEST_PROTOCOL)
