@@ -41,7 +41,8 @@ Docker Image
 You can also use the prebuilt Yasb image :
 
 .. code:: bash
-  # docker run -it -v $(pwd):/sources/ c4software/yasb:latest yasb  
+
+   # docker run -it -v $(pwd):/sources/ c4software/yasb:latest yasb  
 
 
 Project Structure
