@@ -24,7 +24,6 @@ Instalation
 -----------
 	pip install -U  https://github.com/c4software/YASB/archive/master.zip
 
-
 Fast usage
 ----------
 
@@ -34,6 +33,16 @@ Fast usage
 	# yasb-init
 	# # Create your first article in the source/ folder
 	# yasb
+
+
+Docker Image
+------------
+
+You can also use the prebuilt Yasb image :
+
+.. code:: bash
+  # docker run -it -v $(pwd):/sources/ c4software/yasb:latest yasb  
+
 
 Project Structure
 -----------------
