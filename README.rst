@@ -29,10 +29,10 @@ Fast usage
 
 .. code:: bash
 
-	# mkdir myproject && cd myproject
-	# yasb-init
-	# # Create your first article in the source/ folder
-	# yasb
+	mkdir myproject && cd myproject
+	yasb-init
+	# Create your first article in the source/ folder
+	yasb
 
 
 Docker Image
@@ -42,7 +42,7 @@ You can also use the prebuilt Yasb image :
 
 .. code:: bash
 
-   # docker run -it -v $(pwd):/sources/ c4software/yasb:latest yasb  
+   docker run -it -v $(pwd):/sources/ c4software/yasb:latest yasb  
 
 
 Project Structure
