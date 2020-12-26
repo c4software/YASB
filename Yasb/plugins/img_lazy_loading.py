@@ -9,12 +9,12 @@ class Plugin():
         logging.info("[Image Lazy Loading] Init")
 
     def run(self, settings, content, fields):
-        soup = BeautifulSoup(content.decode('utf-8', 'ignore'), "html.parser")
+        soup = BeautifulSoup(content, "html.parser")
         imgs = soup.findAll('img')
         for img in imgs:
             img.attrs['loading'] = 'lazy'
 
-        return str(soup)
+        return str(soup).decode('utf-8', 'ignore')
 
     def teardown(self, settings):
         logging.info("[Image Lazy Loading] Teardown")
