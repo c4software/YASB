@@ -129,10 +129,6 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 
 			# If the article has the nosave field we skip the writing to disk action
 			if "nosave" not in fields:
-				# Execute the "run" action of each enable plugin
-				for plugin in plugins:
-					content = plugin.run(settings=settings, content=content, fields=fields) or content
-
 				# Create output dir if needed
 				if not os.path.exists(output_dir):
 					os.makedirs(output_dir)
@@ -152,6 +148,10 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 					else:
 						fileName, fileExtension = os.path.splitext(infile)
 						fields['page'] = fileName+".html"
+
+				# Execute the "run" action of each enable plugin
+				for plugin in plugins:
+					content = plugin.run(settings=settings, content=content, fields=fields) or content
 
 				result_page = htmlbuilder.build_html(content,fields, settings)
 
