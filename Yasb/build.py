@@ -133,7 +133,6 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 				for plugin in plugins:
 					content = plugin.run(settings=settings, content=content, fields=fields) or content
 
-				result_page = htmlbuilder.build_html(content,fields, settings)
 				# Create output dir if needed
 				if not os.path.exists(output_dir):
 					os.makedirs(output_dir)
@@ -153,6 +152,8 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 					else:
 						fileName, fileExtension = os.path.splitext(infile)
 						fields['page'] = fileName+".html"
+
+				result_page = htmlbuilder.build_html(content,fields, settings)
 
 				logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
 				f = open(output_dir+fields['page'], 'w')
