@@ -9,7 +9,7 @@ class Plugin():
         logging.info("[Image Lazy Loading] Init")
 
     def run(self, settings, content, fields):
-        soup = BeautifulSoup(content, "html.parser")
+        soup = BeautifulSoup(content.decode('utf-8', 'ignore'), "html.parser")
         imgs = soup.findAll('img')
         for img in imgs:
             img.attrs['loading'] = 'lazy'
