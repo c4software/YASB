@@ -129,11 +129,10 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 
 			# If the article has the nosave field we skip the writing to disk action
 			if "nosave" not in fields:
-				
 				result_page = htmlbuilder.build_html(content,fields, settings)
 				# Create output dir if needed
 				if not os.path.exists(output_dir):
-						os.makedirs(output_dir)
+					os.makedirs(output_dir)
 
 				# Create output path if needed
 				if "path" in fields:
@@ -151,6 +150,10 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 						fileName, fileExtension = os.path.splitext(infile)
 						fields['page'] = fileName+".html"
 
+				# Execute the "run" action of each enable plugin
+				for plugin in plugins:
+					result_page = plugin.run(settings=settings, content=result_page, fields=fields)
+
 				logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
 				f = open(output_dir+fields['page'], 'w')
 				f.write(result_page.encode('utf8'))
@@ -159,7 +162,3 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 				if settings.get("diff_build",False):
 					# If we are in diff build mode, we save the result of parsing (to speed up next build)
 					previoud_parsing[path_in_file] = (content, fields)
-
-		# Execute the "run" action of each enable plugin
-		for plugin in plugins:
-			plugin.run(settings=settings, content=content, fields=fields)
