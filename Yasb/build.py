@@ -152,7 +152,7 @@ def processing_pages(path, folder, settings, plugins, previous_build_date, previ
 
 				# Execute the "run" action of each enable plugin
 				for plugin in plugins:
-					result_page = plugin.run(settings=settings, content=result_page.encode('utf8'), fields=fields)
+					result_page = plugin.run(settings=settings, content=result_page.encode('utf8'), fields=fields) or result_page
 
 				logging.debug("[Core] Open for writing : "+output_dir+fields['page'])
 				f = open(output_dir+fields['page'], 'w')
